@@ -1,4 +1,4 @@
-tool_name: "Quantum Data Synthesizer"
+tool_name: "Quantum Data Synthesizer modified"
 tool_description: "An advanced tool for synthesizing and analyzing quantum data sets. It leverages cutting-edge algorithms to process complex quantum information and generate insightful visualizations."
 
 required_env_vars:
