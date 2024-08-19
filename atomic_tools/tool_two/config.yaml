@@ -1,24 +1,29 @@
-tool_name: "Advanced Data Processor"
-tool_description: "A powerful tool for processing and analyzing complex datasets. It supports various data formats and provides advanced visualization capabilities."
+tool_name: "Quantum Data Synthesizer"
+tool_description: "An advanced tool for synthesizing and analyzing quantum data sets. It leverages cutting-edge algorithms to process complex quantum information and generate insightful visualizations."
 
 required_env_vars:
-  - API_KEY
-  - DATA_SOURCE_URL
-  - MAX_THREADS
-  - DEBUG_MODE
+  - QUANTUM_API_TOKEN
+  - ENTANGLEMENT_THRESHOLD
+  - MAX_QUBITS
+  - SIMULATION_MODE
+  - DECOHERENCE_TIME_MS
+  - MEASUREMENT_PRECISION
+  - NOISE_REDUCTION_ENABLED
 
 env_var_descriptions:
-  API_KEY: "Your unique API key for authentication."
-  DATA_SOURCE_URL: "URL of the primary data source."
-  MAX_THREADS: "Maximum number of threads for parallel processing."
-  DEBUG_MODE: "Enable or disable debug mode (true/false)."
-  OUTPUT_FORMAT: "Desired output format (optional, defaults to JSON)."
-  CACHE_TTL: "Time-to-live for cached data in seconds (optional)."
+  QUANTUM_API_TOKEN: "Your unique token for accessing the Quantum Computing API."
+  ENTANGLEMENT_THRESHOLD: "Threshold value for quantum entanglement detection (float between 0 and 1)."
+  MAX_QUBITS: "Maximum number of qubits to process simultaneously."
+  SIMULATION_MODE: "Toggle between 'real' quantum hardware and 'simulated' environment."
+  DECOHERENCE_TIME_MS: "Decoherence time in milliseconds for quantum state preservation."
+  MEASUREMENT_PRECISION: "Precision level for quantum state measurements (1-10)."
+  NOISE_REDUCTION_ENABLED: "Enable or disable quantum noise reduction algorithms."
 
 default_env_values:
-  API_KEY: ""
-  DATA_SOURCE_URL: "https://data.example.com/api/v2"
-  MAX_THREADS: 4
-  DEBUG_MODE: false
-  OUTPUT_FORMAT: "JSON"
-  CACHE_TTL: 3600
+  QUANTUM_API_TOKEN: ""
+  ENTANGLEMENT_THRESHOLD: 0.5
+  MAX_QUBITS: 32
+  SIMULATION_MODE: "simulated"
+  DECOHERENCE_TIME_MS: 100
+  MEASUREMENT_PRECISION: 8
+  NOISE_REDUCTION_ENABLED: true
