@@ -1,0 +1,24 @@
+tool_name: "Advanced Data Processor"
+tool_description: "A powerful tool for processing and analyzing complex datasets. It supports various data formats and provides advanced visualization capabilities."
+
+required_env_vars:
+  - API_KEY
+  - DATA_SOURCE_URL
+  - MAX_THREADS
+  - DEBUG_MODE
+
+env_var_descriptions:
+  API_KEY: "Your unique API key for authentication."
+  DATA_SOURCE_URL: "URL of the primary data source."
+  MAX_THREADS: "Maximum number of threads for parallel processing."
+  DEBUG_MODE: "Enable or disable debug mode (true/false)."
+  OUTPUT_FORMAT: "Desired output format (optional, defaults to JSON)."
+  CACHE_TTL: "Time-to-live for cached data in seconds (optional)."
+
+default_env_values:
+  API_KEY: ""
+  DATA_SOURCE_URL: "https://data.example.com/api/v2"
+  MAX_THREADS: 4
+  DEBUG_MODE: false
+  OUTPUT_FORMAT: "JSON"
+  CACHE_TTL: 3600
