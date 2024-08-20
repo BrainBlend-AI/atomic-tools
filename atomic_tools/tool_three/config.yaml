@@ -1,32 +1,13 @@
 tool_name: "Neural Network Optimizer"
-tool_description: "A sophisticated tool for optimizing and fine-tuning neural networks. It employs advanced algorithms to enhance model performance, reduce training time, and improve overall accuracy across various deep learning tasks."
+tool_description: "Advanced tool for optimizing neural networks, enhancing performance and accuracy."
 
-required_env_vars:
-  - NN_API_KEY
-  - OPTIMIZER_TYPE
-  - LEARNING_RATE
-  - BATCH_SIZE
-  - MAX_EPOCHS
-  - EARLY_STOPPING_PATIENCE
-  - GPU_ENABLED
-  - REGULARIZATION_STRENGTH
-
-env_var_descriptions:
-  NN_API_KEY: "Your unique API key for accessing the Neural Network Optimization service."
-  OPTIMIZER_TYPE: "Type of optimizer to use (e.g., 'adam', 'sgd', 'rmsprop')."
-  LEARNING_RATE: "Learning rate for the optimization process (float between 0.0001 and 0.1)."
-  BATCH_SIZE: "Number of samples per batch for training."
-  MAX_EPOCHS: "Maximum number of epochs for training."
-  EARLY_STOPPING_PATIENCE: "Number of epochs with no improvement after which training will be stopped."
-  GPU_ENABLED: "Enable or disable GPU acceleration for training."
-  REGULARIZATION_STRENGTH: "Strength of L1/L2 regularization to prevent overfitting."
-
-default_env_values:
-  NN_API_KEY: ""
-  OPTIMIZER_TYPE: "adam"
-  LEARNING_RATE: 0.001
-  BATCH_SIZE: 32
-  MAX_EPOCHS: 100
-  EARLY_STOPPING_PATIENCE: 10
-  GPU_ENABLED: true
-  REGULARIZATION_STRENGTH: 0.01
+env_vars:
+  NN_API_KEY:
+    description: "API key for accessing the Neural Network Optimization service"
+    default: ""
+  OPTIMIZER_TYPE:
+    description: "Type of optimizer (e.g., 'adam', 'sgd', 'rmsprop')"
+    default: "adam"
+  LEARNING_RATE:
+    description: "Learning rate (float between 0.0001 and 0.1)"
+    default: 0.001

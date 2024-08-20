@@ -1,29 +1,13 @@
 tool_name: "Quantum Data Synthesizer modified"
-tool_description: "An advanced tool for synthesizing and analyzing quantum data sets. It leverages cutting-edge algorithms to process complex quantum information and generate insightful visualizations."
+tool_description: "Advanced tool for synthesizing and analyzing quantum data sets, processing complex quantum information and generating visualizations."
 
-required_env_vars:
-  - QUANTUM_API_TOKEN
-  - ENTANGLEMENT_THRESHOLD
-  - MAX_QUBITS
-  - SIMULATION_MODE
-  - DECOHERENCE_TIME_MS
-  - MEASUREMENT_PRECISION
-  - NOISE_REDUCTION_ENABLED
-
-env_var_descriptions:
-  QUANTUM_API_TOKEN: "Your unique token for accessing the Quantum Computing API."
-  ENTANGLEMENT_THRESHOLD: "Threshold value for quantum entanglement detection (float between 0 and 1)."
-  MAX_QUBITS: "Maximum number of qubits to process simultaneously."
-  SIMULATION_MODE: "Toggle between 'real' quantum hardware and 'simulated' environment."
-  DECOHERENCE_TIME_MS: "Decoherence time in milliseconds for quantum state preservation."
-  MEASUREMENT_PRECISION: "Precision level for quantum state measurements (1-10)."
-  NOISE_REDUCTION_ENABLED: "Enable or disable quantum noise reduction algorithms."
-
-default_env_values:
-  QUANTUM_API_TOKEN: ""
-  ENTANGLEMENT_THRESHOLD: 0.5
-  MAX_QUBITS: 32
-  SIMULATION_MODE: "simulated"
-  DECOHERENCE_TIME_MS: 100
-  MEASUREMENT_PRECISION: 8
-  NOISE_REDUCTION_ENABLED: true
+env_vars:
+  QUANTUM_API_TOKEN:
+    description: "Token for accessing the Quantum Computing API"
+    default: ""
+  ENTANGLEMENT_THRESHOLD:
+    description: "Threshold for quantum entanglement detection (float between 0 and 1)"
+    default: 0.5
+  MAX_QUBITS:
+    description: "Maximum number of qubits to process simultaneously"
+    default: 32

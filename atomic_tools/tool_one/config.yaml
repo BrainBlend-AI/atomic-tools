@@ -1,11 +1,7 @@
 tool_name: "The name of some tool"
 tool_description: "The description of some tool. This will be a bit longer and maybe even longer like this."
 
-required_env_vars:
-  - SOME_ENV_VAR
-
-env_var_descriptions:
-  SOME_ENV_VAR: "Some API URL must go here."
-
-default_env_values:
-  SOME_ENV_VAR: "https://my.api.com/v1"
+env_vars:
+  SOME_ENV_VAR:
+    description: "Some API URL must go here"
+    default: "https://my.api.com/v1"
