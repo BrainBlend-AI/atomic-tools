@@ -1,12 +1,14 @@
+# Calculator
+
 This is a readme for the calculator tool.
 
-# Installation
+## Installation
 
 ```bash
 pip install atomic_tools
 ```
 
-# Usage
+## Usage
 
 ```python
 from atomic_tools.calculator_tool import CalculatorTool

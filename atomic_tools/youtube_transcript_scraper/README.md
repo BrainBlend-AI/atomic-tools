@@ -1,12 +1,14 @@
-This is a readme for the calculator tool.
+# YouTube Transcript Scraper
 
-# Installation
+This is a readme for the YouTube Transcript Scraper.
+
+## Installation
 
 ```bash
 pip install atomic_tools
 ```
 
-# Usage
+## Usage
 
 ```python
 from atomic_tools.calculator_tool import CalculatorTool
