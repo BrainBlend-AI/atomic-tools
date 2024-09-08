@@ -1,0 +1,4 @@
+atomic_agents==0.3.2
+pydantic==2.8.2
+rich==13.7.1
+sympy==1.12
