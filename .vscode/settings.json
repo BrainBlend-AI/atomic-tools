@@ -1,0 +1,5 @@
+{
+  "python.analysis.extraPaths": [
+    "C:\\dev_new\\BrainAtomics\\atomic_agents"
+  ]
+}

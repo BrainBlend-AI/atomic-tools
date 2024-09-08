@@ -1,4 +1,4 @@
-This is a readme for the tool one tool.
+This is a readme for the calculator tool.
 
 # Installation
 
