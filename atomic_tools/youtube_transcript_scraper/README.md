@@ -1,21 +1,28 @@
-# YouTube Transcript Scraper
+# YouTube Transcript Scraper Tool
 
-This is a readme for the YouTube Transcript Scraper.
+## Overview
+The YouTube Transcript Scraper Tool is a Python-based utility designed for fetching and processing transcripts from YouTube videos. It uses the YouTube Transcript API to retrieve transcripts and the Google API to fetch video metadata. This tool is built using the Pydantic library for input validation and leverages the `atomic_agents` framework for consistent tool structure.
 
-## Installation
+## Features
+- Fetch transcripts from YouTube videos.
+- Support for language-specific transcript retrieval.
+- Retrieve video metadata (title, channel, publication date).
+- Input validation using Pydantic.
+- Error handling for common transcript fetching issues.
 
-```bash
-pip install atomic_tools
-```
-
-## Usage
+## Example Usage
 
 ```python
-from atomic_tools.calculator_tool import CalculatorTool
+from tool.youtube_transcript_scraper import YouTubeTranscriptTool, YouTubeTranscriptToolConfig
 
-calculator = CalculatorTool()
+api_key = "your_youtube_api_key"
+transcript_tool = YouTubeTranscriptTool(config=YouTubeTranscriptToolConfig(api_key=api_key))
 
-calculator.add(1, 2)
+input_data = YouTubeTranscriptTool.input_schema(
+    video_url="https://www.youtube.com/watch?v=t1e8gqXLbsU",
+    language="en"
+)
+
+result = transcript_tool.run(input_data)
+print(result)  # Output: YouTubeTranscriptToolOutputSchema with transcript, duration, and metadata
 ```
-
-Thank you for using the calculator tool!

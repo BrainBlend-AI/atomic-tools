@@ -1,5 +1,4 @@
 from pydantic import Field
-from rich.console import Console
 from sympy import sympify
 
 from atomic_agents.agents.base_agent import BaseIOSchema
@@ -71,6 +70,7 @@ class CalculatorTool(BaseTool):
         """
         # Explicitly convert the string form of the expression
         parsed_expr = sympify(str(params.expression))
+
         # Evaluate the expression numerically
         result = parsed_expr.evalf()
         return CalculatorToolOutputSchema(result=str(result))
@@ -80,7 +80,8 @@ class CalculatorTool(BaseTool):
 # EXAMPLE USAGE #
 #################
 if __name__ == "__main__":
-    rich_console = Console()
-    rich_console.print(
-        CalculatorTool().run(CalculatorToolInputSchema(expression="2 + 2"))
+    calculator = CalculatorTool()
+    result = calculator.run(
+        CalculatorToolInputSchema(expression="sin(pi/2) + cos(pi/4)")
     )
+    print(result)  # Expected output: {"result":"1.70710678118655"}

@@ -3,7 +3,6 @@ from typing import List, Optional
 
 from googleapiclient.discovery import build
 from pydantic import Field
-from rich.console import Console
 from youtube_transcript_api import (
     NoTranscriptFound,
     TranscriptsDisabled,
@@ -159,6 +158,8 @@ class YouTubeTranscriptTool(BaseTool):
 # EXAMPLE USAGE #
 #################
 if __name__ == "__main__":
+    from rich.console import Console
+
     rich_console = Console()
     api_key = os.getenv("YOUTUBE_API_KEY")
     search_tool_instance = YouTubeTranscriptTool(

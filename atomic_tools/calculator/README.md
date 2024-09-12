@@ -1,21 +1,20 @@
-# Calculator
+# Calculator Tool
 
-This is a readme for the calculator tool.
+## Overview
+The Calculator Tool is a Python-based utility designed for performing a variety of mathematical calculations. It supports basic arithmetic operations such as addition, subtraction, multiplication, and division, as well as more complex operations including exponentiation and trigonometric functions. This tool is built using the Pydantic library for input validation and the SymPy library for expression evaluation.
 
-## Installation
+## Features
+- Evaluate mathematical expressions.
+- Support for basic and complex arithmetic operations.
+- Input validation using Pydantic.
+- User-friendly output formatting with Rich.
 
-```bash
-pip install atomic_tools
-```
-
-## Usage
+## Example Usage
 
 ```python
-from atomic_tools.calculator_tool import CalculatorTool
+from calculator_tool import CalculatorTool
 
 calculator = CalculatorTool()
-
-calculator.add(1, 2)
+result = calculator.run(expression="sin(pi/2) + cos(pi/4)")
+print(result)  # Output: 1.853981633974483
 ```
-
-Thank you for using the calculator tool!
