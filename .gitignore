@@ -4,7 +4,7 @@ build
 .vscode
 .python-version
 *.egg-info
-.pytest-cache
+.pytest-cache/
 .coverage
 .coverage.*
 .cache
