@@ -11,7 +11,7 @@ from atomic_agents.lib.tools.base_tool import BaseTool, BaseToolConfig
 class CalculatorToolInputSchema(BaseIOSchema):
     """
     Tool for performing calculations. Supports basic arithmetic operations
-    like addition, subtraction, multiplication, and division, but also more
+    like addition, subtraction, multiplication, and division, as well as more
     complex operations like exponentiation and trigonometric functions.
     Use this tool to evaluate mathematical expressions.
     """
@@ -60,15 +60,15 @@ class CalculatorTool(BaseTool):
 
     def run(self, params: CalculatorToolInputSchema) -> CalculatorToolOutputSchema:
         """
-        Runs the CalculatorTool with the given parameters.
+        Executes the CalculatorTool with the given parameters.
 
         Args:
-            params (CalculatorToolInputSchema): The input parameters for the tool, adhering to the input schema.
+            params (CalculatorToolInputSchema): The input parameters for the tool.
 
         Returns:
-            CalculatorToolOutputSchema: The output of the tool, adhering to the output schema.
+            CalculatorToolOutputSchema: The result of the calculation.
         """
-        # Explicitly convert the string form of the expression
+        # Convert the expression string to a symbolic expression
         parsed_expr = sympify(str(params.expression))
 
         # Evaluate the expression numerically
