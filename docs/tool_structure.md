@@ -1,143 +1,254 @@
-# Guide: Creating a Tool and Its Tests
+# Anatomy of a Tool in Atomic Agents
 
-## Tool Structure
+## Introduction
 
-A typical tool in this framework consists of the following components:
+The **Atomic Agents** framework enables developers to create modular, extensible, and efficient AI tools. This guide outlines the core anatomy of a tool within the Atomic Agents ecosystem, providing a structured approach to building new tools that seamlessly integrate into the framework.
 
-1. Input Schema
-2. Output Schema
-3. Tool Configuration
-4. Tool Logic
-5. Tests
-6. README
-7. Requirements
+## Components of a Tool
 
-Let's break down each component:
+Each tool in Atomic Agents is constructed using a standardized architecture to ensure consistency and ease of integration. The primary components include:
+
+1. **Input Schema**
+2. **Output Schema**
+3. **Tool Logic**
+4. **Configuration**
+5. **Example Usage**
 
 ### 1. Input Schema
 
-Define an input schema class that inherits from `BaseIOSchema`:
+The Input Schema defines the structure and validation rules for the data the tool expects. Utilizing Pydantic's `BaseModel`, it ensures that all inputs meet the required criteria before processing.
 
-```python
-from pydantic import Field
-from atomic_agents.agents.base_agent import BaseIOSchema
+**Example: `CalculatorToolInputSchema`**
 
-class YourToolInputSchema(BaseIOSchema):
-    """Docstring describing the input schema."""
-    expression: str = Field(..., description="The expression to evaluate.")
+```python:atomic_tools/calculator/tool/calculator.py
+class CalculatorToolInputSchema(BaseIOSchema):
+    """
+    Tool for performing calculations. Supports basic arithmetic operations
+    like addition, subtraction, multiplication, and division, as well as more
+    complex operations like exponentiation and trigonometric functions.
+    Use this tool to evaluate mathematical expressions.
+    """
+
+    expression: str = Field(
+        ..., description="Mathematical expression to evaluate. For example, '2 + 2'."
+    )
 ```
 
 ### 2. Output Schema
 
-Define an output schema class that also inherits from `BaseIOSchema`:
+The Output Schema defines the structure and validation rules for the data the tool returns after execution. It ensures that the output adheres to a consistent format, facilitating seamless integration with other components.
 
-```python
-class YourToolOutputSchema(BaseIOSchema):
-    """Docstring describing the output schema."""
-    result: str = Field(..., description="The result of the evaluation.")
+**Example: `CalculatorToolOutputSchema`**
+
+```python:atomic_tools/calculator/tool/calculator.py
+class CalculatorToolOutputSchema(BaseIOSchema):
+    """This schema defines the output of the CalculatorTool."""
+
+    result: str = Field(..., description="Result of the calculation.")
 ```
 
-### 3. Tool Configuration
+### 3. Tool Logic
 
-Create a configuration class that inherits from `BaseToolConfig`:
+The Tool Logic encapsulates the core functionality of the tool, detailing how inputs are processed to produce outputs. It inherits from a base tool class and implements the `run` method, which orchestrates the tool's operations.
 
-```python
-from atomic_agents.lib.tools.base_tool import BaseToolConfig
+**Example: `CalculatorTool`**
 
-class YourToolConfig(BaseToolConfig):
-    # Add any tool-specific configuration options here
-    pass
-```
+```python:atomic_tools/calculator/tool/calculator.py
+class CalculatorTool(BaseTool):
+    """
+    Tool for performing calculations based on the provided mathematical expression.
 
-### 4. Tool Logic
+    Attributes:
+        input_schema (CalculatorToolInputSchema): The schema for the input data.
+        output_schema (CalculatorToolOutputSchema): The schema for the output data.
+    """
 
-Implement the main tool logic in a class that inherits from `BaseTool`:
+    input_schema = CalculatorToolInputSchema
+    output_schema = CalculatorToolOutputSchema
 
-```python
-from atomic_agents.lib.tools.base_tool import BaseTool
+    def __init__(self, config: CalculatorToolConfig = CalculatorToolConfig()):
+        """
+        Initializes the CalculatorTool.
 
-class YourTool(BaseTool):
-    input_schema = YourToolInputSchema
-    output_schema = YourToolOutputSchema
-
-    def __init__(self, config: YourToolConfig = YourToolConfig()):
+        Args:
+            config (CalculatorToolConfig): Configuration for the tool.
+        """
         super().__init__(config)
 
-    def run(self, params: YourToolInputSchema) -> YourToolOutputSchema:
-        # Implement your tool logic here
-        result = self._evaluate_expression(params.expression)
-        return YourToolOutputSchema(result=result)
+    def run(self, params: CalculatorToolInputSchema) -> CalculatorToolOutputSchema:
+        """
+        Executes the CalculatorTool with the given parameters.
 
-    def _evaluate_expression(self, expression: str) -> str:
-        # Implement the actual evaluation logic
-        pass
+        Args:
+            params (CalculatorToolInputSchema): The input parameters for the tool.
+
+        Returns:
+            CalculatorToolOutputSchema: The result of the calculation.
+        """
+        # Convert the expression string to a symbolic expression
+        parsed_expr = sympify(params.expression)
+
+        # Evaluate the expression numerically
+        result = parsed_expr.evalf()
+        return CalculatorToolOutputSchema(result=str(result))
 ```
 
-### 5. Tests
+### 4. Configuration
 
-Create a test file in the `tests` directory:
+Configuration handles the settings required by the tool, such as API keys or environment variables. It ensures that sensitive information is managed securely and can be easily modified without altering the tool's core logic.
 
-```python
-import os
-import sys
-from unittest.mock import patch
+**Example: `YouTubeTranscriptToolConfig`**
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+```python:atomic_tools/youtube_transcript_scraper/tool/youtube_transcript_scraper.py
+class YouTubeTranscriptToolConfig(BaseToolConfig):
+    api_key: str = Field(
+        description="YouTube API key for fetching video metadata.",
+        default=os.getenv("YOUTUBE_API_KEY"),
+    )
+```
 
-from tool.your_tool import YourTool, YourToolInputSchema, YourToolOutputSchema
+### 5. Example Usage
 
-def test_your_tool():
-    your_tool = YourTool()
-    input_schema = YourToolInputSchema(expression="2 + 2")
-    result = your_tool.run(input_schema)
-    assert result == YourToolOutputSchema(result="4")
+Example Usage demonstrates how to instantiate and utilize the tool within an application. It provides a practical reference for developers to integrate the tool into their workflows effectively.
 
+**Example Usage: `CalculatorTool`**
+
+```python:atomic_tools/calculator/tool/calculator.py
 if __name__ == "__main__":
-    test_your_tool()
-```
-
-### 6. README
-
-Create a `README.md` file in the tool's root directory:
-
-```markdown
-# Your Tool Name
-
-## Overview
-Brief description of what your tool does.
-
-## Features
-- List key features of your tool
-
-## Example Usage
-
-```python
-from your_tool import YourTool
-
-tool = YourTool()
-result = tool.run(expression="2 + 2")
-print(result)  # Output: {"result": "4"}
-```
-```
-
-### 7. Requirements
-
-Create a `requirements.txt` file in the tool's root directory:
-
-```
-atomic_agents>=0.3.3
-pydantic>=2.8.2
-# Add any other specific dependencies for your tool
+    calculator = CalculatorTool()
+    result = calculator.run(
+        CalculatorToolInputSchema(expression="sin(pi/2) + cos(pi/4)")
+    )
+    print(result)  # Expected output: {"result":"1.70710678118655"}
 ```
 
 ## Creating a New Tool
 
-To create a new tool:
+To create a new tool within the Atomic Agents framework, follow these steps:
 
-1. Create a new directory under `atomic_tools/` for your tool.
-2. Implement the components described above.
-3. Ensure your tool follows the structure of existing tools like Calculator or YouTube Transcript Scraper.
-4. Write comprehensive tests covering various scenarios.
-5. Keep your README up-to-date with accurate information and usage examples.
+1. **Define the Input Schema:**
+   Specify the input parameters the tool will accept using a Pydantic `BaseModel`.
 
-By following this guide, you can create well-structured, testable tools that integrate seamlessly with the existing framework.
+   **Example:**
+   ```python:your_tool/tool/your_tool.py
+   class YourToolInputSchema(BaseIOSchema):
+       """
+       Description of your tool's input parameters.
+       """
+       param1: str = Field(..., description="Description of param1.")
+       param2: int = Field(..., description="Description of param2.")
+   ```
+
+2. **Define the Output Schema:**
+   Specify the structure of the data the tool will return after execution.
+
+   **Example:**
+   ```python:your_tool/tool/your_tool.py
+   class YourToolOutputSchema(BaseIOSchema):
+       """
+       Description of the tool's output.
+       """
+       result: str = Field(..., description="Description of the result.")
+   ```
+
+3. **Implement the Tool Logic:**
+   Create a class that inherits from `BaseTool`, set the `input_schema` and `output_schema`, and implement the `run` method with the tool's functionality.
+
+   **Example:**
+   ```python:your_tool/tool/your_tool.py
+   class YourTool(BaseTool):
+       """
+       Tool for [brief description of what your tool does].
+
+       Attributes:
+           input_schema (YourToolInputSchema): The schema for the input data.
+           output_schema (YourToolOutputSchema): The schema for the output data.
+       """
+
+       input_schema = YourToolInputSchema
+       output_schema = YourToolOutputSchema
+
+       def __init__(self, config: YourToolConfig = YourToolConfig()):
+           """
+           Initializes the YourTool.
+
+           Args:
+               config (YourToolConfig): Configuration for the tool.
+           """
+           super().__init__(config)
+
+       def run(self, params: YourToolInputSchema) -> YourToolOutputSchema:
+           """
+           Executes the YourTool with the given parameters.
+
+           Args:
+               params (YourToolInputSchema): The input parameters for the tool.
+
+           Returns:
+               YourToolOutputSchema: The result of the tool's execution.
+           """
+           # Implement your tool's logic here
+           result = "your_result_based_on_params"
+           return YourToolOutputSchema(result=result)
+   ```
+
+4. **Configure the Tool:**
+   Create a configuration class inheriting from `BaseToolConfig` to manage any necessary settings or environment variables.
+
+   **Example:**
+   ```python:your_tool/tool/your_tool.py
+   class YourToolConfig(BaseToolConfig):
+       """
+       Configuration for YourTool.
+
+       Attributes:
+           setting1 (str): Description of setting1.
+           setting2 (int): Description of setting2.
+       """
+       setting1: str = Field(..., description="Description of setting1.")
+       setting2: int = Field(..., description="Description of setting2.")
+   ```
+
+5. **Provide Example Usage:**
+   Add examples demonstrating how to use the tool, aiding developers in integration.
+
+   **Example Usage:**
+   ```python:your_tool/tool/your_tool.py
+   if __name__ == "__main__":
+       tool = YourTool()
+       input_data = YourToolInputSchema(param1="value1", param2=42)
+       output = tool.run(input_data)
+       print(output)  # Expected output: {"result":"expected_result"}
+   ```
+
+6. **Write Tests:**
+   Develop test cases to validate the tool's functionality, ensuring it behaves as expected.
+
+   **Example Test:**
+   ```python:your_tool/tests/test_your_tool.py
+   import pytest
+   from your_tool.tool.your_tool import YourTool, YourToolInputSchema, YourToolOutputSchema, YourToolConfig
+
+   def test_your_tool():
+       config = YourToolConfig(setting1="value1", setting2=2)
+       tool = YourTool(config=config)
+       input_data = YourToolInputSchema(param1="test", param2=10)
+       result = tool.run(input_data)
+       assert isinstance(result, YourToolOutputSchema)
+       assert result.result == "expected_result_based_on_input"
+   ```
+
+## Best Practices
+
+- **Modularity:** Design tools to perform single, well-defined tasks to enhance reusability and maintainability.
+- **Validation:** Utilize Pydantic schemas for rigorous input and output validation, ensuring data integrity.
+- **Error Handling:** Implement comprehensive error checks to manage unexpected scenarios gracefully.
+- **Configuration Management:** Securely handle sensitive information like API keys using environment variables and configuration classes.
+- **Documentation:** Provide clear docstrings and usage examples to aid developers in understanding and utilizing the tools effectively.
+- **Testing:** Develop thorough test cases to validate the tool's functionality and reliability across different scenarios.
+
+## Conclusion
+
+Mastering the anatomy of a tool within the Atomic Agents framework enables the creation of robust and efficient AI-driven applications. By adhering to the structured approach outlined in this guide, developers can ensure consistency, reliability, and scalability in their tool development endeavors.
+
+For more detailed information and advanced configurations, refer to the [Atomic Agents Documentation](https://github.com/BrainBlend-AI/atomic-agents).
